@@ -8,7 +8,7 @@ use App\Model\User;
  */
 class WalletService {
     /**
-     * Función encargada de egistrar clientes
+     * Función encargada de registrar clientes
      * @param $user
      * @return User
      */
