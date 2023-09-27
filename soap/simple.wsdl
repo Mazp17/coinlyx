@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://example.com/walletservice/"
+        targetNamespace="http://example.com/walletservice/"
+>
+    <!-- Definición de tipos de datos -->
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/walletservice/">
+            <element name="RegisterClientRequest">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="names" type="string"/>
+                        <element name="email" type="string"/>
+                        <element name="phone" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="RegisterClientResponse">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="names" type="string"/>
+                        <element name="email" type="string"/>
+                        <element name="phone" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="GetSaldoRequest">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="phone" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="GetSaldoResponse" type="string"/>
+
+            <!-- Define los tipos de datos para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
+        </schema>
+    </types>
+
+    <!-- Definición de los mensajes -->
+    <message name="RegisterClientRequestMessage">
+        <part name="parameters" element="tns:RegisterClientRequest"/>
+    </message>
+    <message name="RegisterClientResponseMessage">
+        <part name="parameters" element="tns:RegisterClientResponse"/>
+    </message>
+
+    <message name="GetSaldoRequestMessage">
+        <part name="parameters" element="tns:GetSaldoRequest"/>
+    </message>
+    <message name="GetSaldoResponseMessage">
+        <part name="parameters" element="tns:GetSaldoResponse"/>
+    </message>
+
+    <!-- Define los mensajes para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
+
+    <!-- Definición del puerto y el servicio -->
+    <portType name="WalletServicePortType">
+        <operation name="registerClient">
+            <input message="tns:RegisterClientRequestMessage"/>
+            <output message="tns:RegisterClientResponseMessage"/>
+        </operation>
+        <operation name="getSaldo">
+            <input message="tns:GetSaldoRequestMessage"/>
+            <output message="tns:GetSaldoResponseMessage"/>
+        </operation>
+        <!-- Define otras operaciones aquí -->
+    </portType>
+
+    <binding name="WalletServiceBinding" type="tns:WalletServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="registerClient">
+            <soap:operation soapAction="http://example.com/walletservice/registerClient"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSaldo">
+            <soap:operation soapAction="http://example.com/walletservice/getSaldo"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <!-- Define otras operaciones aquí -->
+    </binding>
+
+    <service name="WalletService">
+        <port name="WalletServicePort" binding="tns:WalletServiceBinding">
+            <soap:address location="http://localhost/soap/soap.php"/>
+        </port>
+    </service>
+</definitions>

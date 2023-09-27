@@ -1,0 +1,17 @@
+{
+    "name": "miguel/coinlyx",
+    "description": "This app allow management your cash",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Miguel Zapata",
+            "email": "zpmaepp@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-soap": "*"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "App/"}
+    }
+}
