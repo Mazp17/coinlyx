@@ -39,6 +39,19 @@
             </element>
             <element name="GetSaldoResponse" type="string"/>
 
+            <element name="GetUserRequest" type="string"/>
+            <element name="GetUserResponse">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="names" type="string"/>
+                        <element name="email" type="string"/>
+                        <element name="phone" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+
             <!-- Define los tipos de datos para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
         </schema>
     </types>
@@ -58,6 +71,13 @@
         <part name="parameters" element="tns:GetSaldoResponse"/>
     </message>
 
+    <message name="GetUserRequestMessage">
+        <part name="parameters" element="tns:GetUserRequest"/>
+    </message>
+    <message name="GetUserResponseMessage">
+        <part name="parameters" element="tns:GetUserResponse"/>
+    </message>
+
     <!-- Define los mensajes para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
 
     <!-- Definición del puerto y el servicio -->
@@ -69,6 +89,10 @@
         <operation name="getSaldo">
             <input message="tns:GetSaldoRequestMessage"/>
             <output message="tns:GetSaldoResponseMessage"/>
+        </operation>
+        <operation name="GetUser">
+            <input message="tns:GetUserRequestMessage"/>
+            <output message="tns:GetUserResponseMessage"/>
         </operation>
         <!-- Define otras operaciones aquí -->
     </portType>
@@ -86,6 +110,15 @@
         </operation>
         <operation name="getSaldo">
             <soap:operation soapAction="http://example.com/walletservice/getSaldo"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetUser">
+            <soap:operation soapAction="http://example.com/walletservice/getUser"/>
             <input>
                 <soap:body use="literal"/>
             </input>

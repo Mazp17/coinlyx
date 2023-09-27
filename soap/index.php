@@ -1,15 +1,6 @@
 <?php
 require __DIR__ . "/vendor/autoload.php";
 
-try {
-    $client = new SoapClient("simple.wsdl");
+$wallet = new \App\Controller\WalletService();
 
-    $response = array();
-    $response['helloResponse'] = $client->saludar();
-
-    print "<pre>";
-    print_r($response);
-    print "</pre>";
-} catch (SoapFault $e) {
-    var_dump($e);
-}
+echo(json_encode($wallet->getUser("1000403329")));
