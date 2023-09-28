@@ -40,6 +40,10 @@ class UserCrud {
     {
         $query = "INSERT INTO users (document, names, email, phone) VALUES (?, ?, ?, ?)";
         $result = $this->db->insertQuery($query, [$user->document, $user->names, $user->email, $user->phone]);
+        $user->setId($result);
+
+        $query = "INSERT INTO balance (userId) VALUES (?)";
+        $result = $this->db->insertQuery($query, [$user->getId()]);
         if($result) {
             return $user;
         }

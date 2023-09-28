@@ -44,10 +44,15 @@ class DbConnect
         $this->connectDb();
         try {
             $exec =  $this->conexion->prepare($query);
-            return $exec->execute($data);
+            $this->conexion->beginTransaction();
+            $exec->execute($data);
+            $id = $this->conexion->lastInsertId();
+            $this->conexion->commit();
+            return $id;
         } catch (\PDOException $e) {
+            $this->conexion->rollback();
             if($e->getCode() == 23000) {
-                throw new \SoapFault(400, "Ese numero de identificación ya existe");
+                throw new \SoapFault("400", "Ese numero de identificación ya existe");
             }
         }
         return false;

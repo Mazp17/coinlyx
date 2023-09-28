@@ -21,6 +21,7 @@
             <element name="RegisterClientResponse">
                 <complexType>
                     <sequence>
+                        <element name="id" type="int"/>
                         <element name="document" type="string"/>
                         <element name="names" type="string"/>
                         <element name="email" type="string"/>
@@ -51,7 +52,42 @@
                 </complexType>
             </element>
 
+            <element name="LoadWalletRequest">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="phone" type="string"/>
+                        <element name="value" type="double"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="LoadWalletResponse">
+                <complexType>
+                    <sequence>
+                        <element name="status" type="int"/>
+                        <element name="message" type="string"/>
+                        <element name="balance" type="double"/>
+                    </sequence>
+                </complexType>
+            </element>
 
+            <element name="MakePayRequest">
+                <complexType>
+                    <sequence>
+                        <element name="document" type="string"/>
+                        <element name="value" type="double"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="MakePayResponse">
+                <complexType>
+                    <sequence>
+                        <element name="status" type="int"/>
+                        <element name="message" type="string"/>
+                        <element name="sessionKey" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
             <!-- Define los tipos de datos para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
         </schema>
     </types>
@@ -78,6 +114,19 @@
         <part name="parameters" element="tns:GetUserResponse"/>
     </message>
 
+    <message name="LoadWalletRequestMessage">
+        <part name="parameters" element="tns:LoadWalletRequest"/>
+    </message>
+    <message name="LoadWalletResponseMessage">
+        <part name="parameters" element="tns:LoadWalletResponse"/>
+    </message>
+
+    <message name="MakePayRequestMessage">
+        <part name="parameters" element="tns:MakePayRequest"/>
+    </message>
+    <message name="MakePayResponseMessage">
+        <part name="parameters" element="tns:MakePayResponse"/>
+    </message>
     <!-- Define los mensajes para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
 
     <!-- Definición del puerto y el servicio -->
@@ -93,6 +142,14 @@
         <operation name="GetUser">
             <input message="tns:GetUserRequestMessage"/>
             <output message="tns:GetUserResponseMessage"/>
+        </operation>
+        <operation name="LoadWallet">
+            <input message="tns:LoadWalletRequestMessage"/>
+            <output message="tns:LoadWalletResponseMessage"/>
+        </operation>
+        <operation name="MakePay">
+            <input message="tns:MakePayRequestMessage"/>
+            <output message="tns:MakePayResponseMessage"/>
         </operation>
         <!-- Define otras operaciones aquí -->
     </portType>
@@ -119,6 +176,24 @@
         </operation>
         <operation name="GetUser">
             <soap:operation soapAction="http://example.com/walletservice/getUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="LoadWallet">
+            <soap:operation soapAction="http://example.com/walletservice/getUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="MakePay">
+            <soap:operation soapAction="http://example.com/walletservice/makePay"/>
             <input>
                 <soap:body use="literal"/>
             </input>
