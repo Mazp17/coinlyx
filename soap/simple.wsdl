@@ -88,6 +88,24 @@
                     </sequence>
                 </complexType>
             </element>
+
+            <element name="ConfirmPayRequest">
+                <complexType>
+                    <sequence>
+                        <element name="sessionKey" type="string"/>
+                        <element name="otp" type="string"/>
+                        <element name="document" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="ConfirmPayResponse">
+                <complexType>
+                    <sequence>
+                        <element name="status" type="int"/>
+                        <element name="message" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
             <!-- Define los tipos de datos para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
         </schema>
     </types>
@@ -127,6 +145,13 @@
     <message name="MakePayResponseMessage">
         <part name="parameters" element="tns:MakePayResponse"/>
     </message>
+
+    <message name="ConfirmPayRequestMessage">
+        <part name="parameters" element="tns:ConfirmPayRequest"/>
+    </message>
+    <message name="ConfirmPayResponseMessage">
+        <part name="parameters" element="tns:ConfirmPayResponse"/>
+    </message>
     <!-- Define los mensajes para otras operaciones como loadWallet, makePay, confirmPay, etc. -->
 
     <!-- Definición del puerto y el servicio -->
@@ -150,6 +175,10 @@
         <operation name="MakePay">
             <input message="tns:MakePayRequestMessage"/>
             <output message="tns:MakePayResponseMessage"/>
+        </operation>
+        <operation name="ConfirmPay">
+            <input message="tns:ConfirmPayRequestMessage"/>
+            <output message="tns:ConfirmPayResponseMessage"/>
         </operation>
         <!-- Define otras operaciones aquí -->
     </portType>
@@ -194,6 +223,15 @@
         </operation>
         <operation name="MakePay">
             <soap:operation soapAction="http://example.com/walletservice/makePay"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="ConfirmPay">
+            <soap:operation soapAction="http://example.com/walletservice/confirmPay"/>
             <input>
                 <soap:body use="literal"/>
             </input>

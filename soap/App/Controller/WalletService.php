@@ -7,6 +7,7 @@ use App\CRUD\UserCrud;
 use App\CRUD\WalletCrud;
 use App\DB\DbConnect;
 use App\Model\User;
+use App\Response\ConfirmPayResponse;
 use App\Response\PayResponse;
 use App\Response\WalletResponse;
 use Cassandra\Date;
@@ -160,10 +161,10 @@ class WalletService
     /**
      * Confirmar un pago
      * @param $request object with { sessionKey, otp, document }
-     * @return string
+     * @return ConfirmPayResponse
      * @throws SoapFault
      */
-    public function confirmPay(object $request)
+    public function confirmPay(object $request): ConfirmPayResponse
     {
         $user = $this->userCrud->searchUser($request->document);
         if(!$user) {
@@ -190,6 +191,11 @@ class WalletService
         $wallet = $this->walletCrud->update($user["id"], $wallet["balance"]);
 
         $this->sessionCRUD->setInactive($user["id"], $session["session_key"]);
-        return $wallet;
+
+        $response = new ConfirmPayResponse();
+        $response->message = "Se ha confirmado el pago";
+        $response->status = 200;
+
+        return $response;
     }
 }
