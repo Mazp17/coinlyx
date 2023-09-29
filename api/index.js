@@ -36,6 +36,8 @@ app.post("/user/register", async (req, res) => {
 });
 
 app.get("/user/:document", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     const document = req.params.document;
     const value = await walletService.getUser(document);
     if(!value) {

@@ -6,6 +6,8 @@ const router = express.Router();
 const walletService = new WalletService(process.env.URL_WSDL);
 
 router.get("/balance", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     const data = {
         document: req.query.document,
         phone: req.query.phone
@@ -31,6 +33,8 @@ router.get("/balance", async (req, res) => {
 });
 
 router.post("/load", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     const data = {
         document: req.body.document,
         phone: req.body.phone,
@@ -55,6 +59,8 @@ router.post("/load", async (req, res) => {
 });
 
 router.post("/confirm", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     const data = {
         sessionKey: req.body.sessionKey,
         otp: req.body.otp,
@@ -79,6 +85,8 @@ router.post("/confirm", async (req, res) => {
 });
 
 router.post("/pay", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+
     const data = {
         document: req.body.document,
         value: req.body.value
