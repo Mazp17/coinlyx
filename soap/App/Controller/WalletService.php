@@ -125,7 +125,7 @@ class WalletService
         $session = $this->sessionCRUD->searchByActive($user["id"]);
         if ($session) {
             $to_time = strtotime($session["created_at"]);
-            $from_time = strtotime(date("Y-m-d h:i:s"));
+            $from_time = strtotime(date("Y-m-d H:i:s"));
             $diff = round(abs($from_time - $to_time) / 60, 2);
             if (round(abs($from_time - $to_time) / 60, 2) <= 5) {
                 throw new SoapFault("400", "Tienes un pago pendiente, intentalo en 5 minutos");
