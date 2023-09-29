@@ -34,6 +34,7 @@ router.get("/balance", async (req, res) => {
 
 router.post("/load", async (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
 
     const data = {
         document: req.body.document,

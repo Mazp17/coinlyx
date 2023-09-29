@@ -15,6 +15,27 @@ const wsdlUrl = process.env.URL_WSDL;
 const walletService = new WalletService(wsdlUrl);
 
 app.use(express.json());
+
+// Add headers before the routes are defined
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 app.post("/user/register", async (req, res) => {
     const user = new User(req.body);
     try {
@@ -65,16 +86,3 @@ app.use("/wallet", wallet);
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-
-/* const server = http.createServer(async (req, res) => {
-    const client = await createSoapClient(wsdlUrl);
-    const value = await getUserFromWalletService(client, "10004033291");
-    console.log(value.toString());
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
-    res.end(JSON.stringify(value));
-});
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}`);
-}); */
