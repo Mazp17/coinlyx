@@ -54,8 +54,28 @@ router.post("/load", async (req, res) => {
     }
 });
 
-router.get("/confirm", (req, res) => {
-    res.end("Confirm Pay");
+router.post("/confirm", async (req, res) => {
+    const data = {
+        sessionKey: req.body.sessionKey,
+        otp: req.body.otp,
+        document: req.body.document
+    };
+    try {
+        const value = await walletService.confirmPay(data);
+        return res.json({
+            status: true,
+            code: 200,
+            message: value.message,
+            data: value
+        })
+    } catch(error) {
+        return res.json({
+            status: false,
+            code: 400,
+            message: error.message,
+            data: {}
+        });
+    }
 });
 
 router.post("/pay", async (req, res) => {

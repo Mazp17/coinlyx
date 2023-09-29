@@ -73,4 +73,14 @@ export default class WalletService {
             })
         })
     }
+    
+    confirmPay(data) {
+        return new Promise((resolve, reject) => {
+            this._client.WalletService.WalletServicePort.ConfirmPay(data, (err, value) => {
+                if(err) reject(err);
+
+                resolve(value);
+            })
+        })
+    }
 }
