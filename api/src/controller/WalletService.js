@@ -63,4 +63,14 @@ export default class WalletService {
             })
         });
     }
+
+    makePay(data) {
+        return new Promise((resolve, reject) => {
+            this._client.WalletService.WalletServicePort.MakePay(data, (err, value) => {
+                if(err) reject(err);
+
+                resolve(value);
+            })
+        })
+    }
 }
