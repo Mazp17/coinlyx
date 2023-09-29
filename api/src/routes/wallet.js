@@ -38,14 +38,14 @@ router.post("/load", async (req, res) => {
     };
     try {
         const value = await walletService.loadWallet(data);
-        res.json({
+        return res.json({
             status: true,
             code: 200,
             message: "Se ha cargado con exito",
             data: value
         })
     } catch (error) {
-        res.json({
+        return res.json({
             status: false,
             code: 400,
             message: error.message,
@@ -58,13 +58,27 @@ router.get("/confirm", (req, res) => {
     res.end("Confirm Pay");
 });
 
-router.post("/pay", (req, res) => {
+router.post("/pay", async (req, res) => {
     const data = {
         document: req.body.document,
         value: req.body.value
     }
-
-    return res.json(data);
+    try {
+        const value = await walletService.makePay(data);
+        return res.json({
+            status: true,
+            code: 200,
+            message: value.message,
+            data: value
+        });
+    } catch(error) {
+        return res.json({
+            status: false,
+            code: 400,
+            message: error.message,
+            data: {}
+        });
+    }
 });
 
 export default router;
