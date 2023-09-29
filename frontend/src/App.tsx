@@ -1,17 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Balance from './pages/wallet/Balance';
+import Client from './pages/client';
+import Layout from './pages/Layout';
+import Wallet from './pages/wallet/Wallet';
+import Load from './pages/wallet/Load';
+import Pay from './pages/wallet/Pay';
 
 
 function App() {
 
   return (
     <>
-      <h1>Coinlyx</h1>
-      <Button as="a" variant="primary">
-        Button as link
-      </Button>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route path='wallet' element={<Wallet/>}>
+              <Route path='balance' element={<Balance/>}/>
+              <Route path='load' element={<Load/>}/>
+              <Route path='pay' element={<Pay/>}/>
+            </Route>
+            <Route path='/register' element={<Client/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
 
-export default App
+export default App;
