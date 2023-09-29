@@ -54,7 +54,7 @@ class DbConnect
             if($e->getCode() == 23000) {
                 throw new \SoapFault("400", "Ese numero de identificación ya existe");
             }
+            throw new \SoapFault("500", $e->getMessage());
         }
-        return false;
     }
 }

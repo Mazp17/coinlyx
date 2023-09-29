@@ -26,28 +26,30 @@ class UserCrud {
      */
     public function searchUser($document)
     {
-        $query = "SELECT * FROM users WHERE document = $document";
+        $query = "SELECT * FROM users WHERE document = '$document'";
         return $this->db->executeQuery($query)->fetch();
     }
 
     /**
      * Metodo para persistir un usuario
      * @param User $user
-     * @return User|string
+     * @return User
      * @throws SoapFault
      */
     public function saveUser(User $user)
     {
+        $userG = $this->searchUser($user->document);
+        if($userG) {
+            throw new SoapFault("400", "Este numero de documento ya existe");
+        }
+
         $query = "INSERT INTO users (document, names, email, phone) VALUES (?, ?, ?, ?)";
         $result = $this->db->insertQuery($query, [$user->document, $user->names, $user->email, $user->phone]);
         $user->setId($result);
 
         $query = "INSERT INTO balance (userId) VALUES (?)";
         $result = $this->db->insertQuery($query, [$user->getId()]);
-        if($result) {
-            return $user;
-        }
-        return "failed";
+        return $user;
     }
 
     /**

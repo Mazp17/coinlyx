@@ -5,8 +5,5 @@ $wallet = new \App\Controller\WalletService();
 $user = new \App\Model\User("1011", "Miguel Zapata", "zpmaepp@gmail.com", "123123123");
 
 $data = new stdClass();
-$data->value  = 300.0;
-$data->document = "10004033291";
-$data->phone = "3046089301";
-print_r($wallet->makePay($data));
+print_r($wallet->getUser("asdas"));
 

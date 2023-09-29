@@ -21,7 +21,6 @@
             <element name="RegisterClientResponse">
                 <complexType>
                     <sequence>
-                        <element name="id" type="int"/>
                         <element name="document" type="string"/>
                         <element name="names" type="string"/>
                         <element name="email" type="string"/>

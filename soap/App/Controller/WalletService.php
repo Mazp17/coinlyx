@@ -42,13 +42,10 @@ class WalletService
     /**
      * @throws SoapFault
      */
-    public function registerClient($user): User
+    public function registerClient($user)
     {
         $user = new User($user->document, $user->names, $user->email, $user->phone);
-        $user = $this->userCrud->saveUser($user);
-
-
-        return $user;
+        return $this->userCrud->saveUser($user);
     }
 
     public function getUser($document)
@@ -58,10 +55,22 @@ class WalletService
 
     /**
      * Obtener el saldo de un cliente determinado
+     * @param $request object with params { document, phone }
+     * @return string
+     * @throws SoapFault
      */
-    public function getSaldo()
+    public function getSaldo(object $request): string
     {
-        return "Get saldo";
+        $user = $this->userCrud->searchUser($request->document);
+        if(!$user) {
+            throw new SoapFault("404", "No existe un usuario con este documento");
+        }
+
+        if($user["phone"] != $request->phone) {
+            throw new SoapFault("404", "El numero de telefono no coincide");
+        }
+
+        return $this->walletCrud->searchByUserId($user["id"])["balance"];
     }
 
     /**
